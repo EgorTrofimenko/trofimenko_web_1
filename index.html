@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="RIMSTORE — интернет-магазин колёсных дисков: каталог, корзина, оформление заказа.">
+  <title>RIMSTORE — магазин колёсных дисков</title>
+  <link rel="icon" href="img/favicon.svg" type="image/svg+xml">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;600;800&family=Unbounded:wght@700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+  <header class="header">
+    <div class="container header__inner">
+      <a class="logo" href="#">RIM<span>STORE</span></a>
+      <nav class="nav" aria-label="Основное меню">
+        <a href="#catalog">Каталог</a>
+        <a href="#cart">Корзина</a>
+      </nav>
+      <a class="cart-button" href="#cart" aria-label="Перейти к корзине">
+        Корзина
+        <span class="cart-button__count" id="cart-count-badge">0</span>
+      </a>
+    </div>
+  </header>
+
+  <main>
+    <section class="hero">
+      <div class="container">
+        <p class="hero__tag">Литые и кованые диски R15–R21</p>
+        <h1>Колёсные диски, которые меняют характер автомобиля</h1>
+        <p class="hero__text">Подбор по диаметру и стилю, честные цены и быстрая доставка. Собери комплект, который будет радовать каждый день.</p>
+        <a class="button" href="#catalog">Смотреть каталог</a>
+      </div>
+    </section>
+
+    <section class="catalog" id="catalog">
+      <div class="container">
+        <h2 class="section-title">Каталог дисков</h2>
+        <div class="catalog__grid" id="catalog-grid"></div>
+      </div>
+    </section>
+
+    <section class="cart" id="cart">
+      <div class="container">
+        <h2 class="section-title">Корзина</h2>
+        <p class="cart__empty" id="cart-empty">Пока пусто — добавьте диски из каталога.</p>
+        <div class="cart__layout" id="cart-layout" hidden>
+          <ul class="cart__list" id="cart-list"></ul>
+          <aside class="cart__summary">
+            <h3>Ваш заказ</h3>
+            <p class="cart__total-line">Товаров: <span id="cart-count">0</span></p>
+            <p class="cart__total-line cart__total-line--total">Итого: <span id="cart-total">0 ₽</span></p>
+            <button class="button" id="checkout-btn" type="button">Оформить заказ</button>
+          </aside>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <div class="container footer__inner">
+      <p>© 2026 RIMSTORE</p>
+    </div>
+  </footer>
+</body>
+</html>
