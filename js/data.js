@@ -2,7 +2,7 @@ const products = [
   {
     id: 1,
     name: 'HRE P101 R17',
-    price: 57000,
+    price: 37000,
     diameter: 'R17',
     color: 'Графит',
     image: 'img/rim-1.png',
@@ -38,7 +38,7 @@ const products = [
   {
     id: 5,
     name: 'RZ Forged RZ01 R20',
-    price: 180000,
+    price: 18000,
     diameter: 'R20',
     color: 'Бронза',
     image: 'img/rim-5.png',
