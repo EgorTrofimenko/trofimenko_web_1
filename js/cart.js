@@ -57,5 +57,10 @@ const cart = (function () {
     }, 0);
   }
 
-  return { add, remove, setQty, getItems, getCount, getTotal, findProduct };
+  function clear() {
+    items = [];
+    save();
+  }
+
+  return { add, remove, setQty, getItems, getCount, getTotal, findProduct, clear };
 })();

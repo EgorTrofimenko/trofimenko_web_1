@@ -6,6 +6,12 @@
   const cartCountBadge = document.getElementById('cart-count-badge');
   const cartCount = document.getElementById('cart-count');
   const cartTotal = document.getElementById('cart-total');
+  const checkoutBtn = document.getElementById('checkout-btn');
+  const orderModal = document.getElementById('order-modal');
+  const orderForm = document.getElementById('order-form');
+  const toast = document.getElementById('toast');
+
+  let toastTimer = null;
 
   function formatPrice(value) {
     return value.toLocaleString('ru-RU') + ' ₽';
@@ -141,6 +147,77 @@
     cartCountBadge.textContent = cart.getCount();
     cartCount.textContent = cart.getCount();
     cartTotal.textContent = formatPrice(cart.getTotal());
+
+    checkoutBtn.disabled = items.length === 0;
+  }
+
+  function openModal() {
+    orderModal.hidden = false;
+    document.body.classList.add('no-scroll'); 
+  }
+
+  function closeModal() {
+    orderModal.hidden = true;
+    document.body.classList.remove('no-scroll');
+  }
+
+  function showToast(message) {
+    toast.textContent = message;
+    toast.classList.add('is-visible');
+    clearTimeout(toastTimer);
+    toastTimer = setTimeout(function () {
+      toast.classList.remove('is-visible');
+    }, 3000);
+  }
+
+  const validators = {
+    firstName: function (value) {
+      const v = value.trim();
+      if (!v) return 'Укажите имя';
+      if (!/^[a-zA-Zа-яА-ЯёЁ]{2,30}$/.test(v)) return 'Только буквы, от 2 до 30 символов';
+      return '';
+    },
+    lastName: function (value) {
+      const v = value.trim();
+      if (!v) return 'Укажите фамилию';
+      if (!/^[a-zA-Zа-яА-ЯёЁ]{2,30}$/.test(v)) return 'Только буквы, от 2 до 30 символов';
+      return '';
+    },
+    address: function (value) {
+      const v = value.trim();
+      if (!v) return 'Укажите адрес доставки';
+      if (v.length < 10) return 'Слишком короткий адрес: минимум 10 символов';
+      return '';
+    },
+    phone: function (value) {
+      const v = value.trim();
+      if (!v) return 'Укажите контактный телефон';
+      if (!/^[0-9()+ -]+$/.test(v)) return 'Допустимы только цифры, пробелы и символы + ( ) -';
+      const digits = v.replace(/\D/g, '');
+      if (digits.length < 10 || digits.length > 15) return 'В номере должно быть от 10 до 15 цифр';
+      return '';
+    }
+  };
+
+  function setFieldError(input, message) {
+    const errorNode = orderForm.querySelector('[data-error-for="' + input.name + '"]');
+    if (message) {
+      input.classList.add('is-invalid');
+      input.setAttribute('aria-invalid', 'true');
+      if (errorNode) errorNode.textContent = message;
+    } else {
+      input.classList.remove('is-invalid');
+      input.removeAttribute('aria-invalid');
+      if (errorNode) errorNode.textContent = '';
+    }
+  }
+
+  function validateField(input) {
+    const validate = validators[input.name];
+    if (!validate) return true;
+    const message = validate(input.value);
+    setFieldError(input, message);
+    return message === '';
   }
 
   catalogGrid.addEventListener('click', function (event) {
@@ -174,6 +251,48 @@
     }
 
     renderCart();
+  });
+
+  orderForm.addEventListener('focusout', function (event) {
+    const input = event.target.closest('input');
+    if (input) validateField(input);
+  });
+
+  orderForm.addEventListener('input', function (event) {
+    const input = event.target.closest('input');
+    if (input && input.classList.contains('is-invalid')) validateField(input);
+  });
+
+  checkoutBtn.addEventListener('click', openModal);
+
+  orderModal.addEventListener('click', function (event) {
+    if (event.target.closest('[data-close-modal]')) closeModal();
+  });
+
+  document.addEventListener('keydown', function (event) {
+    if (event.key === 'Escape' && !orderModal.hidden) closeModal();
+  });
+
+  orderForm.addEventListener('submit', function (event) {
+    event.preventDefault();
+
+    let firstInvalid = null;
+    orderForm.querySelectorAll('input').forEach(function (input) {
+      if (!validateField(input) && !firstInvalid) firstInvalid = input;
+    });
+    if (firstInvalid) {
+      firstInvalid.focus();
+      return;
+    }
+
+    closeModal();
+    orderForm.reset();
+    orderForm.querySelectorAll('input').forEach(function (input) {
+      setFieldError(input, '');
+    });
+    cart.clear();
+    renderCart();
+    showToast('Заказ создан!');
   });
 
   renderCatalog();

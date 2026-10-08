@@ -66,6 +66,39 @@
     </div>
   </footer>
   
+  <div class="modal" id="order-modal" hidden>
+    <div class="modal__overlay" data-close-modal></div>
+    <div class="modal__window" role="dialog" aria-modal="true" aria-labelledby="order-modal-title">
+      <button class="modal__close" type="button" data-close-modal aria-label="Закрыть окно">×</button>
+      <h2 class="modal__title" id="order-modal-title">Оформление заказа</h2>
+      <form class="order-form" id="order-form" novalidate>
+        <label class="order-form__field">
+          <span>Имя</span>
+          <input type="text" name="firstName" placeholder="Иван" required>
+          <small class="order-form__error" data-error-for="firstName"></small>
+        </label>
+        <label class="order-form__field">
+          <span>Фамилия</span>
+          <input type="text" name="lastName" placeholder="Иванов" required>
+          <small class="order-form__error" data-error-for="lastName"></small>
+        </label>
+        <label class="order-form__field">
+          <span>Адрес доставки</span>
+          <input type="text" name="address" placeholder="Город, улица, дом, квартира" required>
+          <small class="order-form__error" data-error-for="address"></small>
+        </label>
+        <label class="order-form__field">
+          <span>Контактный телефон</span>
+          <input type="tel" name="phone" placeholder="+375 (29) 123-45-67" required pattern="[0-9()+ -]{10,18}">
+          <small class="order-form__error" data-error-for="phone"></small>
+        </label>
+        <button class="button order-form__submit" type="submit">Создать заказ</button>
+      </form>
+    </div>
+  </div>
+
+  <div class="toast" id="toast" role="status" aria-live="polite"></div>
+
   <script src="js/data.js"></script>
   <script src="js/cart.js"></script>
   <script src="js/app.js"></script>
