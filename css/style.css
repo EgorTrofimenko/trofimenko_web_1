@@ -130,13 +130,6 @@ h1, h2, h3 { margin: 0; line-height: 1.2; }
   scroll-margin-top: 84px;
 }
 
-@media (max-width: 768px) {
-  .container { width: calc(100% - 32px); }
-  .header__inner { gap: 16px; }
-  .nav { display: none; }
-  .hero { padding: 60px 0 48px; }
-}
-
 .catalog { padding: 72px 0; }
 .catalog__grid {
   display: grid;
@@ -154,13 +147,6 @@ h1, h2, h3 { margin: 0; line-height: 1.2; }
 .product-card:hover {
   transform: translateY(-4px);
   box-shadow: 0 12px 32px rgb(0 0 0 / .4);
-}
-
-.product-card__image {
-  width: 100%;
-  aspect-ratio: 1;
-  background: var(--surface-2);
-  object-fit: contain;
 }
 
 .product-card__info {
@@ -202,15 +188,6 @@ h1, h2, h3 { margin: 0; line-height: 1.2; }
   width: 100%;
 }
 
-@media (max-width: 1024px) {
-  .catalog__grid { grid-template-columns: repeat(2, 1fr); gap: 20px; }
-}
-
-@media (max-width: 640px) {
-  .catalog__grid { grid-template-columns: 1fr; gap: 16px; }
-  .catalog { padding: 48px 0; }
-}
-
 .cart { padding: 0 0 72px; }
 .cart__empty { color: var(--muted); }
 
@@ -225,6 +202,7 @@ h1, h2, h3 { margin: 0; line-height: 1.2; }
 
 .cart-item {
   display: grid;
+  grid-template-areas: "image info controls sum remove";
   grid-template-columns: 72px 1fr auto auto auto;
   gap: 16px;
   align-items: center;
@@ -233,6 +211,11 @@ h1, h2, h3 { margin: 0; line-height: 1.2; }
   border: 1px solid var(--line);
   border-radius: var(--radius);
 }
+.cart-item__image { grid-area: image; }
+.cart-item__info { grid-area: info; }
+.cart-item__controls { grid-area: controls; }
+.cart-item__sum { grid-area: sum; }
+.cart-item__remove { grid-area: remove; }
 .cart-item__image { width: 72px; height: 72px; border-radius: 10px; object-fit: cover; }
 .cart-item__name { font-weight: 700; }
 .cart-item__meta { color: var(--muted); font-size: 13px; }
@@ -406,4 +389,83 @@ body.no-scroll { overflow: hidden; }
   color: #ff6b6b;
   font-size: 12px;
   font-weight: 500;
+}
+
+.burger {
+  display: none;
+  flex-direction: column;
+  justify-content: center;
+  gap: 5px;
+  width: 40px;
+  height: 40px;
+  padding: 9px;
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  background: var(--surface-2);
+}
+.burger span {
+  display: block;
+  height: 2px;
+  border-radius: 1px;
+  background: var(--text);
+  transition: transform .2s ease, opacity .2s ease;
+}
+
+@media (max-width: 1024px) {
+  .catalog__grid { grid-template-columns: repeat(2, 1fr); gap: 20px; }
+  .cart__layout { grid-template-columns: 1fr 280px; gap: 20px; }
+}
+
+@media (max-width: 768px) {
+  .container { width: calc(100% - 32px); }
+  .header__inner { gap: 12px; }
+
+  .burger { display: flex; }
+  .nav {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    right: 0;
+    display: none;
+    flex-direction: column;
+    gap: 0;
+    margin: 0;
+    padding: 8px 16px 16px;
+    background: var(--surface);
+    border-bottom: 1px solid var(--line);
+  }
+  .header.nav-open .nav { display: flex; }
+  .nav a { padding: 12px 4px; border-bottom: 1px solid var(--line); }
+  .nav a:last-child { border-bottom: none; }
+
+  .header.nav-open .burger span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+  .header.nav-open .burger span:nth-child(2) { opacity: 0; }
+  .header.nav-open .burger span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+
+  .hero { padding: 56px 0 48px; }
+  .catalog { padding: 48px 0; }
+  .section-title { margin-bottom: 24px; }
+
+  .cart__layout { grid-template-columns: 1fr; }
+  .cart__summary { position: static; }
+
+  .cart-item {
+    grid-template-areas:
+      "image info remove"
+      "image controls sum";
+    grid-template-columns: 64px 1fr auto;
+    row-gap: 10px;
+  }
+  .cart-item__image { width: 64px; height: 64px; }
+
+  .modal { padding: 12px; }
+  .modal__window { padding: 22px 18px; }
+  .toast { bottom: 16px; width: calc(100% - 32px); text-align: center; }
+}
+
+@media (max-width: 640px) {
+  .catalog__grid { grid-template-columns: 1fr; gap: 16px; }
+  .catalog { padding: 40px 0; }
+  .hero { padding: 44px 0 40px; }
+  .footer__inner { flex-direction: column; gap: 4px; }
 }

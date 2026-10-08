@@ -295,6 +295,22 @@
     showToast('Заказ создан!');
   });
 
+  const burgerBtn = document.getElementById('burger-btn');
+  const header = document.querySelector('.header');
+  const mainNav = document.getElementById('main-nav');
+
+  burgerBtn.addEventListener('click', function () {
+    const isOpen = header.classList.toggle('nav-open');
+    burgerBtn.setAttribute('aria-expanded', isOpen);
+  });
+
+  mainNav.addEventListener('click', function (event) {
+    if (event.target.closest('a')) {
+      header.classList.remove('nav-open');
+      burgerBtn.setAttribute('aria-expanded', 'false');
+    }
+  });
+
   renderCatalog();
   renderCart();
 })();

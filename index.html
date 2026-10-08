@@ -15,7 +15,7 @@
   <header class="header">
     <div class="container header__inner">
       <a class="logo" href="#">RIM<span>STORE</span></a>
-      <nav class="nav" aria-label="Основное меню">
+      <nav class="nav" id="main-nav" aria-label="Основное меню">
         <a href="#catalog">Каталог</a>
         <a href="#cart">Корзина</a>
       </nav>
@@ -23,6 +23,11 @@
         Корзина
         <span class="cart-button__count" id="cart-count-badge">0</span>
       </a>
+      <button class="burger" id="burger-btn" type="button" aria-label="Открыть меню" aria-expanded="false" aria-controls="main-nav">
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
     </div>
   </header>
 
@@ -58,6 +63,7 @@
         </div>
       </div>
     </section>
+
   </main>
 
   <footer class="footer">
