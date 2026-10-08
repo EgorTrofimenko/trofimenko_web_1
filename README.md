@@ -26,3 +26,5 @@ online-shop/
 - HTML5 (семантическая разметка)
 - CSS3 (переменные, flex, grid, медиазапросы)
 - JavaScript (без фреймворков)
+
+Ссылка на проект https://egortrofimenko.github.io/trofimenko_web_1/
